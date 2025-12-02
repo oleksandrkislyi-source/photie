@@ -1,0 +1,148 @@
+/* Hero Section */
+.orders-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Orders Section */
+.orders-section {
+  background-color: #f8f9fa;
+}
+
+/* Empty Orders State */
+.empty-orders {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Order Cards */
+.order-card {
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+}
+
+.card-header {
+  border-radius: 1rem 1rem 0 0 !important;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Order Items */
+.order-items {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.order-item {
+  transition: all 0.2s ease;
+}
+
+.order-item:hover {
+  background-color: #e9ecef !important;
+  transform: translateX(2px);
+}
+
+.item-image img {
+  border: 2px solid #dee2e6;
+}
+
+/* Shipping Info */
+.shipping-info {
+  font-size: 0.9rem;
+}
+
+.shipping-info p {
+  margin-bottom: 0.5rem;
+}
+
+.shipping-info i {
+  width: 20px;
+  color: #6c757d;
+}
+
+/* Order Total */
+.order-total {
+  border-radius: 0.5rem;
+}
+
+/* Orders Summary */
+.orders-summary .card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .orders-hero {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .order-card .row > div {
+    margin-bottom: 1rem;
+  }
+
+  .order-items {
+    max-height: none;
+  }
+
+  .order-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .item-image {
+    margin-bottom: 1rem;
+    margin-right: 0;
+  }
+
+  .item-quantity {
+    margin-bottom: 0.5rem;
+    margin-right: 0;
+  }
+}
+
+/* Custom Scrollbar for Order Items */
+.order-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.order-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.order-items::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.order-items::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Loading Spinner */
+.spinner-border {
+  border-width: 0.3em;
+}
+
+/* Badge Enhancements */
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 0.8em;
+}
+
+/* Alert Info */
+.alert-info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}

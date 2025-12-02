@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col">
+      <button class="btn btn-primary" routerLink="/admin/products/new">New Product</button>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Search products..." [(ngModel)]="searchTerm" (input)="filterProducts()">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h2>Products</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th (click)="sortProducts('title')" style="cursor: pointer;">Title {{ sortColumn === 'title' ? (sortDirection === 'asc' ? '↑' : '↓') : '' }}</th>
+            <th (click)="sortProducts('price')" style="cursor: pointer;">Price {{ sortColumn === 'price' ? (sortDirection === 'asc' ? '↑' : '↓') : '' }}</th>
+            <th (click)="sortProducts('category')" style="cursor: pointer;">Category {{ sortColumn === 'category' ? (sortDirection === 'asc' ? '↑' : '↓') : '' }}</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of paginatedProducts; track product) {
+            <tr>
+              <td>{{ product.title }}</td>
+              <td>${{ product.price }}</td>
+              <td>{{ getCategoryName(product.category) }}</td>
+              <td>
+                @if (product.imageUrl) {
+                  <img [src]="product.imageUrl" alt="Product Image" style="width: 50px; height: 50px;">
+                }
+              </td>
+              <td>
+                <button class="btn btn-secondary btn-sm" (click)="editProduct(product)">Edit</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      @if (products.length === 0) {
+        <div class="alert alert-info">
+          No products found. <a routerLink="/admin/products/new">Add a new product</a>.
+        </div>
+      }
+      @if (filteredProducts.length > 0) {
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            <label for="itemsPerPage" class="form-label me-2">Items per page:</label>
+            <select id="itemsPerPage" class="form-select d-inline-block w-auto" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage()">
+              @for (option of itemsPerPageOptions; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          </div>
+          <nav aria-label="Product pagination">
+            <ul class="pagination mb-0">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" href="#" (click)="changePage(currentPage - 1); $event.preventDefault()">Previous</a>
+              </li>
+              @for (page of pages; track page) {
+                <li class="page-item" [class.active]="page === currentPage">
+                  <a class="page-link" href="#" (click)="changePage(page); $event.preventDefault()">{{ page }}</a>
+                </li>
+              }
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" href="#" (click)="changePage(currentPage + 1); $event.preventDefault()">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      }
+    </div>
+  </div>
+</div>

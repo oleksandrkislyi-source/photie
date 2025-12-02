@@ -1,0 +1,135 @@
+<!-- Hero Section -->
+<section class="hero-section py-5 fade-in-up">
+  <div class="container-fluid">
+    <div class="row align-items-center min-vh-100">
+      <div class="col-lg-6 ps-5">
+        <h1 class="display-3 fw-bold mb-4" style="font-size: 4rem; line-height: 1.1;">Welcome to<br><span style="color: #ffffff;">Photie</span></h1>
+        <p class="lead mb-5 fs-5" style="color: #e2e8f0; max-width: 500px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Discover stunning photos from talented artists. High-quality images meet creativity in our curated collection.</p>
+        <div class="d-flex gap-3">
+          <a href="#products" class="btn btn-primary btn-lg px-5 py-3">Shop Now</a>
+          <a href="#features" class="btn btn-outline-primary btn-lg px-5 py-3">Learn More</a>
+        </div>
+      </div>
+      <div class="col-lg-6 position-relative">
+        <div class="hero-image-container">
+          <img src="https://i.pinimg.com/736x/05/e7/c1/05e7c16c863cb6e6f5c629f430fc885b.jpg" alt="Photos" class="img-fluid hero-image">
+          <div class="floating-element floating-1">
+            <i class="bi bi-camera-fill"></i>
+          </div>
+          <div class="floating-element floating-2">
+            <i class="bi bi-star-fill"></i>
+          </div>
+          <div class="floating-element floating-3">
+            <i class="bi bi-heart-fill"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section py-5">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="display-5 fw-bold mb-3" style="color: #f1f5f9; text-shadow: 0 3px 6px rgba(0,0,0,0.4);">Why Choose Photie?</h2>
+        <p class="lead" style="color: #e2e8f0; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Experience the best in online photo marketplace</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card text-center p-4">
+          <div class="feature-icon mb-4">
+            <i class="bi bi-truck display-3"></i>
+          </div>
+          <h5 class="fw-bold mb-3" style="color: #f1f5f9; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Free Shipping</h5>
+          <p style="color: #e2e8f0; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">Free delivery on orders over $50. Fast and reliable shipping worldwide.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-4">
+          <div class="feature-icon mb-4">
+            <i class="bi bi-shield-check display-3"></i>
+          </div>
+          <h5 class="fw-bold mb-3" style="color: #f1f5f9; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Secure Payment</h5>
+          <p style="color: #e2e8f0; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">100% secure transactions with multiple payment options available.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-4">
+          <div class="feature-icon mb-4">
+            <i class="bi bi-arrow-clockwise display-3"></i>
+          </div>
+          <h5 class="fw-bold mb-3" style="color: #f1f5f9; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Easy Returns</h5>
+          <p style="color: #e2e8f0; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">30-day hassle-free return policy. Customer satisfaction guaranteed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section id="products" class="products-section py-5">
+  <div class="container-fluid">
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h2 class="display-5 fw-bold mb-3" style="color: #f1f5f9; text-shadow: 0 3px 6px rgba(0,0,0,0.4);">Our Featured Photos</h2>
+        <p class="lead" style="color: #e2e8f0; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Explore our carefully selected collection</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row g-4">
+          @for (product of filteredProducts; track product.key) {
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <app-product-card [product]="product" [quantity]="getProductQuantity(product.key!)" (cartUpdated)="onCartUpdated()"></app-product-card>
+            </div>
+          }
+        </div>
+        @if (filteredProducts.length === 0) {
+          <div class="text-center py-5">
+            <i class="bi bi-info-circle display-1 mb-3" style="color: #a78bfa;"></i>
+            <h4>No products available</h4>
+            <p style="color: #cbd5e1;">Check back later for new arrivals!</p>
+          </div>
+        }
+      </div>
+      <div class="col-md-3">
+        <div class="sticky-top" style="top: 100px;">
+          <div class="card mb-4 category-sidebar">
+            <div class="card-header">
+              <h5 class="card-title mb-0"><i class="bi bi-filter me-2"></i>Categories</h5>
+            </div>
+            <div class="card-body">
+              <button class="btn btn-outline-primary w-100 mb-3" [class.active]="selectedCategory === ''" (click)="filterByCategory('')">All Categories</button>
+              @for (category of categories; track category.key) {
+                <button class="btn btn-outline-primary w-100 mb-3" [class.active]="selectedCategory === category.key" (click)="filterByCategory(category.key)">{{ category.name }}</button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h3 class="display-6 fw-bold mb-4" style="color: #f1f5f9; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Stay Updated</h3>
+        <p class="lead mb-4" style="color: #e2e8f0; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">Subscribe to our newsletter for the latest photo uploads and exclusive offers.</p>
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="input-group input-group-lg">
+              <input type="email" class="form-control" placeholder="Enter your email address" style="border-radius: 50px 0 0 50px;">
+              <button class="btn btn-primary" type="button" style="border-radius: 0 50px 50px 0; padding: 0 2rem;">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

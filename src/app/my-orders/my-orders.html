@@ -1,0 +1,136 @@
+<!-- Hero Section -->
+<section class="orders-hero bg-gradient-primary text-white py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="display-4 fw-bold mb-3"><i class="bi bi-receipt me-3"></i>My Orders</h1>
+        <p class="lead">Track and manage all your purchases</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Orders Content -->
+<section class="orders-section py-5">
+  <div class="container">
+    @if (isLoading) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading orders...</span>
+        </div>
+        <p class="mt-3 text-muted">Loading your orders...</p>
+      </div>
+    }
+
+    @if (!isLoading && orders.length === 0) {
+      <div class="text-center py-5">
+        <div class="empty-orders">
+          <i class="bi bi-cart-x display-1 text-muted mb-4"></i>
+          <h3 class="text-muted mb-3">No Orders Yet</h3>
+          <p class="text-muted mb-4">You haven't placed any orders yet. Start shopping to see your orders here!</p>
+          <a routerLink="/" class="btn btn-primary btn-lg">
+            <i class="bi bi-shop me-2"></i>Start Shopping
+          </a>
+        </div>
+      </div>
+    }
+
+    @if (!isLoading && orders.length > 0) {
+      <div class="row">
+        <div class="col-12">
+          <div class="orders-summary mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>{{ orders.length }} Order{{ orders.length > 1 ? 's' : '' }}</h5>
+                  </div>
+                  <div class="col-md-6 text-md-end">
+                    <small class="text-muted">Total spent: ${{ getTotalSpent().toFixed(2) }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        @for (order of orders; track order.id) {
+          <div class="col-12 mb-4">
+            <div class="card order-card border-0 shadow-sm h-100">
+              <div class="card-header bg-light border-0">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <h5 class="mb-0 text-primary">
+                      <i class="bi bi-hash me-2"></i>Order #{{ order.id?.substring(0, 8) }}
+                    </h5>
+                    <small class="text-muted">
+                      <i class="bi bi-calendar me-1"></i>{{ formatDate(order.datePlaced) }}
+                    </small>
+                  </div>
+                  <div class="col-md-6 text-md-end">
+                    <span class="badge bg-success fs-6 px-3 py-2">
+                      <i class="bi bi-check-circle me-1"></i>Delivered
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <h6 class="mb-3">
+                      <i class="bi bi-box-seam me-2"></i>Order Items
+                    </h6>
+                    <div class="order-items">
+                      @for (item of getOrderItems(order); track item.product.title) {
+                        <div class="order-item d-flex align-items-center mb-3 p-3 bg-light rounded">
+                          <div class="item-image me-3">
+                            <img [src]="item.product.imageUrl" alt="{{ item.product.title }}"
+                                 class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                          </div>
+                          <div class="item-details flex-grow-1">
+                            <h6 class="mb-1">{{ item.product.title }}</h6>
+                            <small class="text-muted">{{ item.product.category }}</small>
+                          </div>
+                          <div class="item-quantity text-center me-3">
+                            <span class="badge bg-primary px-3 py-2">Qty: {{ item.quantity }}</span>
+                          </div>
+                          <div class="item-price text-end">
+                            <strong class="text-primary">${{ (item.product.price * item.quantity).toFixed(2) }}</strong>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="order-summary">
+                      <h6 class="mb-3">
+                        <i class="bi bi-geo-alt me-2"></i>Shipping Details
+                      </h6>
+                      <div class="shipping-info bg-light p-3 rounded">
+                        <p class="mb-2"><i class="bi bi-person me-2"></i><strong>{{ order.shippingInfo.name }}</strong></p>
+                        <p class="mb-2"><i class="bi bi-envelope me-2"></i>{{ order.shippingInfo.email }}</p>
+                        <p class="mb-2"><i class="bi bi-telephone me-2"></i>{{ order.shippingInfo.phone }}</p>
+                        <p class="mb-2"><i class="bi bi-house me-2"></i>{{ order.shippingInfo.address }}</p>
+                        <p class="mb-2"><i class="bi bi-geo me-2"></i>{{ order.shippingInfo.city }}, {{ order.shippingInfo.postalCode }}</p>
+                        <p class="mb-0"><i class="bi bi-credit-card me-2"></i>{{ order.shippingInfo.paymentMethod }}</p>
+                      </div>
+
+                      <div class="order-total mt-4 p-3 bg-primary text-white rounded">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <span class="h5 mb-0">Total Amount</span>
+                          <span class="h4 mb-0 fw-bold">${{ order.total.toFixed(2) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

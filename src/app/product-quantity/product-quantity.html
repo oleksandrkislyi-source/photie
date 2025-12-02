@@ -1,0 +1,5 @@
+<div class="d-flex align-items-center">
+  <button class="btn btn-outline-secondary btn-sm me-2" (click)="decrement()" [disabled]="quantity <= minQuantity">-</button>
+  <span class="mx-2">{{ quantity }}</span>
+  <button class="btn btn-outline-secondary btn-sm ms-2" (click)="increment()">+</button>
+</div>

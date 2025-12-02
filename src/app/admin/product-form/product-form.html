@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-md-6">
+    <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Enter product title" [(ngModel)]="product.title" name="title" #title="ngModel" required [ngModelOptions]="{updateOn: 'blur'}" (blur)="validateTitle(title.control)" (input)="onTitleInput()">
+        @if (title.invalid && title.touched) {
+          <div class="text-danger">
+            @if (title.errors?.['required']) {
+              <div>Title is required.</div>
+            }
+            @if (title.errors?.['minLength']) {
+              <div>Title must be at least 3 characters long.</div>
+            }
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control" id="price" placeholder="Enter product price" [(ngModel)]="product.price" name="price" #price="ngModel" required [ngModelOptions]="{updateOn: 'blur'}" (blur)="validatePrice(price.control)" (input)="onPriceInput()">
+          </div>
+        </div>
+        @if (price.invalid && price.touched) {
+          <div class="text-danger">
+            @if (price.errors?.['required']) {
+              <div>Price is required.</div>
+            }
+            @if (price.errors?.['invalidPrice']) {
+              <div>Price must be a positive number.</div>
+            }
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select class="form-control" id="category" [(ngModel)]="product.category" name="category" #category="ngModel" required>
+          <option value="">Select a category</option>
+          @for (c of categories; track c) {
+            <option [value]="c.key">{{ c.name }}</option>
+          }
+        </select>
+        @if (category.invalid && category.touched) {
+          <div class="text-danger">Category is required.</div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" class="form-control" id="imageUrl" placeholder="Enter image URL" [(ngModel)]="product.imageUrl" name="imageUrl" #imageUrl="ngModel" required [ngModelOptions]="{updateOn: 'blur'}" (blur)="validateImageUrl(imageUrl.control)">
+        @if (imageUrl.invalid && imageUrl.touched) {
+          <div class="text-danger">
+            @if (imageUrl.errors?.['required']) {
+              <div>Image URL is required.</div>
+            }
+            @if (imageUrl.errors?.['invalidUrl']) {
+              <div>Please enter a valid image URL (e.g., https://example.com/image.jpg).</div>
+            }
+          </div>
+        }
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
+      @if (isEditMode()) {
+        <button type="button" class="btn btn-danger ml-2" (click)="deleteProduct()">Delete</button>
+      }
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h4>Product Preview</h4>
+    <div class="card" style="width: 18rem;">
+      @if (product.imageUrl) {
+        <img [src]="product.imageUrl" class="card-img-top" alt="Product Image">
+      }
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title || 'Product Title' }} @if (isTypingTitle) {
+          <span class="text-muted small">(typing...)</span>
+        }</h5>
+        <p class="card-text">
+          Price: ${{ product.price || '0.00' }} @if (isTypingPrice) {
+          <span class="text-muted small">(typing...)</span>
+          }<br>
+          Category: {{ getCategoryName(product.category) || 'No Category' }}
+        </p>
+        <button class="btn btn-primary" disabled>Preview Only</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

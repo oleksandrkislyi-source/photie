@@ -1,0 +1,60 @@
+<div class="mb-3">
+  <label for="name">Full Name</label>
+  <input type="text" class="form-control" id="name" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+@if (form.get('name')?.invalid && form.get('name')?.touched) {
+  <div class="invalid-feedback">
+    Full name is required and must be at least 2 characters.
+  </div>
+}
+</div>
+
+<div class="mb-3">
+  <label for="email">Email</label>
+  <input type="email" class="form-control" id="email" formControlName="email" [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched">
+@if (form.get('email')?.invalid && form.get('email')?.touched) {
+  <div class="invalid-feedback">
+    Please enter a valid email address.
+  </div>
+}
+</div>
+
+<div class="mb-3">
+  <label for="phone">Phone</label>
+  <input type="tel" class="form-control" id="phone" formControlName="phone" [class.is-invalid]="form.get('phone')?.invalid && form.get('phone')?.touched">
+@if (form.get('phone')?.invalid && form.get('phone')?.touched) {
+  <div class="invalid-feedback">
+    Phone number is required.
+  </div>
+}
+</div>
+
+<div class="mb-3">
+  <label for="address">Address</label>
+  <input type="text" class="form-control" id="address" formControlName="address" [class.is-invalid]="form.get('address')?.invalid && form.get('address')?.touched">
+@if (form.get('address')?.invalid && form.get('address')?.touched) {
+  <div class="invalid-feedback">
+    Address is required and must be at least 5 characters.
+  </div>
+}
+</div>
+
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <label for="city">City</label>
+    <input type="text" class="form-control" id="city" formControlName="city" [class.is-invalid]="form.get('city')?.invalid && form.get('city')?.touched">
+@if (form.get('city')?.invalid && form.get('city')?.touched) {
+  <div class="invalid-feedback">
+    City is required.
+  </div>
+}
+  </div>
+  <div class="col-md-6 mb-3">
+    <label for="postalCode">Postal Code</label>
+    <input type="text" class="form-control" id="postalCode" formControlName="postalCode" [class.is-invalid]="form.get('postalCode')?.invalid && form.get('postalCode')?.touched">
+@if (form.get('postalCode')?.invalid && form.get('postalCode')?.touched) {
+  <div class="invalid-feedback">
+    Postal code is required.
+  </div>
+}
+  </div>
+</div>

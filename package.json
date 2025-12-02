@@ -1,0 +1,62 @@
+{
+  "name": "photie",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:photie": "node dist/photie/server/server.mjs"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^21.0.2",
+    "@angular/common": "^21.0.2",
+    "@angular/compiler": "^21.0.2",
+    "@angular/core": "^21.0.2",
+    "@angular/fire": "^20.0.1",
+    "@angular/forms": "^21.0.2",
+    "@angular/platform-browser": "^21.0.2",
+    "@angular/platform-server": "^21.0.2",
+    "@angular/router": "^21.0.2",
+    "@angular/ssr": "^21.0.1",
+    "@ng-bootstrap/ng-bootstrap": "^19.0.1",
+    "@stripe/stripe-js": "^8.1.0",
+    "boostrap": "^2.0.0",
+    "bootstrap": "^5.3.8",
+    "express": "^5.1.0",
+    "firebase": "^11.10.0",
+    "ng2-validation": "^3.9.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.0.1",
+    "@angular/cli": "^20.0.6",
+    "@angular/compiler-cli": "^21.0.2",
+    "@types/express": "^5.0.1",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^20.17.19",
+    "baseline-browser-mapping": "^2.8.32",
+    "jasmine-core": "~5.9.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.9.2"
+  }
+}

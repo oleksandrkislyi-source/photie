@@ -1,0 +1,89 @@
+<div class="container">
+  <h1 class="mb-4">Shopping Cart</h1>
+
+  @if (!cart || !cart.items || (cart.items | keyvalue).length === 0) {
+    <div class="alert alert-info text-center">
+      <h4>Your cart is empty</h4>
+      <p>Add some products to get started!</p>
+      <a routerLink="/" class="btn btn-primary">Continue Shopping</a>
+    </div>
+  }
+
+  @if (cart && cart.items && (cart.items | keyvalue).length > 0) {
+    <div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Cart Items ({{ getTotalItems() }})</h5>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3 fw-bold">
+                <div class="col-md-2 text-center">Image</div>
+                <div class="col-md-4">Name</div>
+                <div class="col-md-2">Price</div>
+                <div class="col-md-2">Quantity</div>
+                <div class="col-md-1">Total</div>
+                <div class="col-md-1">Remove</div>
+              </div>
+              <hr>
+                @for (item of cart.items | keyvalue; track item) {
+                  <div class="row mb-3">
+                    <div class="col-md-2 text-center">
+                      <img [src]="item.value.product.imageUrl" class="img-fluid rounded" alt="{{ item.value.product.title }}" style="max-height: 100px;">
+                    </div>
+                    <div class="col-md-4">
+                      <h5>{{ item.value.product.title }}</h5>
+                      <p class="text-muted mb-1">{{ item.value.product.category }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <p class="mb-0 fw-bold">${{ item.value.product.price }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="d-flex align-items-center">
+                        <button class="btn btn-outline-secondary btn-sm me-2" (click)="updateQuantity(item.key, item.value.quantity - 1)">-</button>
+                        <span class="mx-2">{{ item.value.quantity }}</span>
+                        <button class="btn btn-outline-secondary btn-sm ms-2" (click)="updateQuantity(item.key, item.value.quantity + 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <p class="mb-0 fw-bold">${{ (item.value.product.price * item.value.quantity).toFixed(2) }}</p>
+                    </div>
+                    <div class="col-md-1">
+                      <button class="btn btn-outline-danger" (click)="removeItem(item.key)" style="padding: 1rem; min-width: 3rem;">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-8">
+                    <h4>Total: ${{ getTotalPrice().toFixed(2) }}</h4>
+                  </div>
+                  <div class="col-md-4 text-end">
+                    <button class="btn btn-success btn-lg" (click)="proceedToCheckout()">Proceed to Checkout</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <a routerLink="/" class="btn btn-outline-primary btn-lg" (click)="continueShopping()">Continue Shopping</a>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-outline-danger btn-lg" (click)="clearCart()" [disabled]="!cart || !cart.items || (cart.items | keyvalue).length === 0">Clear Cart</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
